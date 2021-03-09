@@ -1,6 +1,6 @@
 # tic-tac-chec
 
-Codigo feito em Pyhton
+Codigo feito em Python
 
 Jogo: Tic Tac Chec 
 
