@@ -9,107 +9,128 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import game_state
 
 class Ui_Form(object):
+    
+    
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(618, 483)
+        
         Form.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.startBtn = QtWidgets.QPushButton(Form)
         self.startBtn.setGeometry(QtCore.QRect(260, 430, 113, 32))
         self.startBtn.setStyleSheet("background-color: rgb(204, 204, 204);")
         self.startBtn.setObjectName("startBtn")
+        
         self.frame_AA = QtWidgets.QFrame(Form)
         self.frame_AA.setGeometry(QtCore.QRect(140, 40, 80, 80))
         self.frame_AA.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_AA.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_AA.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_AA.setObjectName("frame_AA")
+        
         self.frame_AB = QtWidgets.QFrame(Form)
         self.frame_AB.setGeometry(QtCore.QRect(230, 40, 80, 80))
         self.frame_AB.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_AB.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_AB.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_AB.setObjectName("frame_AB")
+        
         self.frame_AC = QtWidgets.QFrame(Form)
         self.frame_AC.setGeometry(QtCore.QRect(320, 40, 80, 80))
         self.frame_AC.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_AC.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_AC.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_AC.setObjectName("frame_AC")
+        
         self.frame_AD = QtWidgets.QFrame(Form)
         self.frame_AD.setGeometry(QtCore.QRect(410, 40, 80, 80))
         self.frame_AD.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_AD.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_AD.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_AD.setObjectName("frame_AD")
+        
         self.frame_BA = QtWidgets.QFrame(Form)
         self.frame_BA.setGeometry(QtCore.QRect(140, 130, 80, 80))
         self.frame_BA.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_BA.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_BA.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_BA.setObjectName("frame_BA")
+        
         self.frame_BC = QtWidgets.QFrame(Form)
         self.frame_BC.setGeometry(QtCore.QRect(320, 130, 80, 80))
         self.frame_BC.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_BC.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_BC.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_BC.setObjectName("frame_BC")
+        
         self.frame_BB = QtWidgets.QFrame(Form)
         self.frame_BB.setGeometry(QtCore.QRect(230, 130, 80, 80))
         self.frame_BB.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_BB.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_BB.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_BB.setObjectName("frame_BB")
+        
         self.frame_BD = QtWidgets.QFrame(Form)
         self.frame_BD.setGeometry(QtCore.QRect(410, 130, 80, 80))
         self.frame_BD.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_BD.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_BD.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_BD.setObjectName("frame_BD")
+        
         self.frame_CA = QtWidgets.QFrame(Form)
         self.frame_CA.setGeometry(QtCore.QRect(140, 220, 80, 80))
         self.frame_CA.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_CA.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_CA.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_CA.setObjectName("frame_CA")
+        
         self.frame_CC = QtWidgets.QFrame(Form)
         self.frame_CC.setGeometry(QtCore.QRect(320, 220, 80, 80))
         self.frame_CC.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_CC.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_CC.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_CC.setObjectName("frame_CC")
+        
         self.frame_CB = QtWidgets.QFrame(Form)
         self.frame_CB.setGeometry(QtCore.QRect(230, 220, 80, 80))
         self.frame_CB.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_CB.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_CB.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_CB.setObjectName("frame_CB")
+        
         self.frame_CD = QtWidgets.QFrame(Form)
         self.frame_CD.setGeometry(QtCore.QRect(410, 220, 80, 80))
         self.frame_CD.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_CD.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_CD.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_CD.setObjectName("frame_CD")
+        
         self.frame_DA = QtWidgets.QFrame(Form)
         self.frame_DA.setGeometry(QtCore.QRect(140, 310, 80, 80))
         self.frame_DA.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_DA.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_DA.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_DA.setObjectName("frame_DA")
+        self.frame_DA.mousePressEvent = lambda x: print('frame_DA')
+        
+        
         self.frame_DC = QtWidgets.QFrame(Form)
         self.frame_DC.setGeometry(QtCore.QRect(320, 310, 80, 80))
         self.frame_DC.setStyleSheet("background-color: rgb(232, 193, 119);")
         self.frame_DC.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_DC.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_DC.setObjectName("frame_DC")
+        
         self.frame_DB = QtWidgets.QFrame(Form)
         self.frame_DB.setGeometry(QtCore.QRect(230, 310, 80, 80))
         self.frame_DB.setStyleSheet("background-color: rgb(115, 65, 29);")
         self.frame_DB.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_DB.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_DB.setObjectName("frame_DB")
+        
         self.frame_DD = QtWidgets.QFrame(Form)
         self.frame_DD.setGeometry(QtCore.QRect(410, 310, 80, 80))
         self.frame_DD.setAutoFillBackground(False)
@@ -117,41 +138,61 @@ class Ui_Form(object):
         self.frame_DD.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_DD.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_DD.setObjectName("frame_DD")
+        
+        
         self.cavalo_preto = QtWidgets.QLabel(Form)
         self.cavalo_preto.setGeometry(QtCore.QRect(40, 50, 64, 64))
         self.cavalo_preto.setText("")
         self.cavalo_preto.setPixmap(QtGui.QPixmap("images_tic-tac-chec/black-horse.png"))
         self.cavalo_preto.setObjectName("cavalo_preto")
+        
         self.bispo_preto = QtWidgets.QLabel(Form)
         self.bispo_preto.setGeometry(QtCore.QRect(40, 140, 64, 64))
         self.bispo_preto.setText("")
         self.bispo_preto.setPixmap(QtGui.QPixmap("images_tic-tac-chec/black-bp.png"))
         self.bispo_preto.setObjectName("bispo_preto")
+        
         self.torre_preto = QtWidgets.QLabel(Form)
         self.torre_preto.setGeometry(QtCore.QRect(40, 230, 64, 64))
         self.torre_preto.setText("")
         self.torre_preto.setPixmap(QtGui.QPixmap("images_tic-tac-chec/black-tower.png"))
         self.torre_preto.setObjectName("torre_preto")
+        
         self.peao_preto = QtWidgets.QLabel(Form)
         self.peao_preto.setGeometry(QtCore.QRect(40, 320, 64, 64))
         self.peao_preto.setText("")
         self.peao_preto.setPixmap(QtGui.QPixmap("images_tic-tac-chec/black-pawn.png"))
         self.peao_preto.setObjectName("peao_preto")
+        
+        inventario1 = game_state.jogadores[0].inventarioPecas
+        inventario2 = game_state.jogadores[1].inventarioPecas
+        
+        # for peca in inventario1:
+        #     if peca.cor == 'branco':
+        #         self.peao_preto = QtWidgets.QLabel(Form)
+        #  self.peao_preto.setGeometry(QtCore.QRect(40, 320, 64, 64))
+        #     self.peao_preto.setText("")
+        # self.peao_preto.setPixmap(QtGui.QPixmap("images_tic-tac-chec/black-pawn.png"))
+        # self.peao_preto.setObjectName("peao_preto")
+
         self.peao_branco = QtWidgets.QLabel(Form)
         self.peao_branco.setGeometry(QtCore.QRect(520, 320, 64, 64))
         self.peao_branco.setText("")
         self.peao_branco.setPixmap(QtGui.QPixmap("images_tic-tac-chec/white-pawn.png"))
         self.peao_branco.setObjectName("peao_branco")
+        
         self.torre_branca = QtWidgets.QLabel(Form)
         self.torre_branca.setGeometry(QtCore.QRect(520, 230, 64, 64))
         self.torre_branca.setText("")
         self.torre_branca.setPixmap(QtGui.QPixmap("images_tic-tac-chec/white-tower.png"))
         self.torre_branca.setObjectName("torre_branca")
+        
         self.cavalo_branco = QtWidgets.QLabel(Form)
         self.cavalo_branco.setGeometry(QtCore.QRect(520, 50, 64, 64))
         self.cavalo_branco.setText("")
         self.cavalo_branco.setPixmap(QtGui.QPixmap("images_tic-tac-chec/white-horse.png"))
         self.cavalo_branco.setObjectName("cavalo_branco")
+        
         self.bispo_branco = QtWidgets.QLabel(Form)
         self.bispo_branco.setGeometry(QtCore.QRect(520, 140, 64, 64))
         self.bispo_branco.setText("")
