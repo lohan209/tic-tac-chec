@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
-'''
-Created on May 14, 2020
 
-@author: lohanrodrigues
-'''
 import sys
 import view
 from PyQt5 import QtWidgets, QtCore
