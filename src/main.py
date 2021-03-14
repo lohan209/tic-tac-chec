@@ -12,7 +12,7 @@ class Main(QtWidgets.QWidget, view.Ui_Form):
         self.setupUi(self)
         self.pedra = "vazio";
         self.posicao = "vazio";
-        self.startBtn.clicked.connect(self.run)
+        self.inicioBtn.clicked.connect(self.run)
                         
     def checkPosition(self, position):
         table = {
