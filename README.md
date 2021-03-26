@@ -6,7 +6,19 @@ Jogo: Tic Tac Chec
 
 Onde o jogo é uma mistura entre Xadrez e jogo da velha.
 
+PRIMEIRO
+- Create the virtual environment and activate it
+``` pip3 install virtualenv ```
+``` virtualenv -p Python3.8 venv ``` 
+``` source venv/bin/activate ``` 
+ 
 
-Para conseguir iniciar o jogo é preciso primeiro Baixar a lib PyQt5 atraves do comando ---> ' pip3 install PyQt5 '   
-Após instalar a lib é preciso entrar na pasta ' src ' do projeto onde você terá o arquivo .main                   
-Em seguida é só rodar o comando ---> ' python3 main.py '
+SEGUNDO 
+
+Você deverá rodar o seguinte comando para executar a instalaão das libs
+ ``` pip3 install -r requirements.txt ```
+
+
+TERCEIRO
+rode o jogo, certifique-se que está na pasta ```src```
+``` python3 main.py ```

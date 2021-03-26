@@ -3,10 +3,10 @@ import sys
 from IPython.external.qt_for_kernel import QtGui, QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QPushButton, QInputDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QPushButton
 
-from src.game_state import State
-from src.view import View
+from game_state import State
+from view import View
 
 
 def main():
