@@ -86,7 +86,7 @@ class GameScreen(QWidget):
             maxSize = (self.w - boardSize) // 2
             title = QLabel(player.name.title(), self)
             title.setStyleSheet("color: white;")
-            font = QtGui.QFont("Times", 18, QtGui.QFont.Bold)
+            font = QtGui.QFont("Roboto", 18)
             title.setFont(font)
             w = title.size().width()
             # h = title.size().height()
@@ -123,7 +123,7 @@ class GameScreen(QWidget):
         currentPlayer = State.jogadores[State.jogadorAtual]
         title = QLabel('Jogador atual: ' + currentPlayer.name.title(), self)
         title.setStyleSheet("color: white;")
-        font = QtGui.QFont("Times", 18, QtGui.QFont.Bold)
+        font = QtGui.QFont("Roboto", 18, QtGui.QFont.Bold)
         title.setFont(font)
         w = title.size().width()
         title.move(self.w // 2 - w, self.h // 20)
