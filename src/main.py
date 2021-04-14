@@ -86,7 +86,7 @@ class GameScreen(QWidget):
             maxSize = (self.w - boardSize) // 2
             title = QLabel(player.name.title(), self)
             title.setStyleSheet("color: white;")
-            font = QtGui.QFont("Roboto", 18)
+            font = QtGui.QFont("Helvetica", 18)
             title.setFont(font)
             w = title.size().width()
             # h = title.size().height()
@@ -113,7 +113,7 @@ class GameScreen(QWidget):
                 label.setText('')
                 cor = peca.cor
                 piece = peca.tipo
-                label.setPixmap(QtGui.QPixmap("images_tic-tac-chec/{}-{}.png".format(cor, piece)))
+                label.setPixmap(QtGui.QPixmap("../src/images_tic-tac-chec/{}-{}.png".format(cor, piece)))
                 label.setObjectName(cor + piece)
                 self.widgets.append(label)
                 label.show()
@@ -123,7 +123,7 @@ class GameScreen(QWidget):
         currentPlayer = State.jogadores[State.jogadorAtual]
         title = QLabel('Jogador atual: ' + currentPlayer.name.title(), self)
         title.setStyleSheet("color: white;")
-        font = QtGui.QFont("Roboto", 18, QtGui.QFont.Bold)
+        font = QtGui.QFont("Helvetica", 18, QtGui.QFont.Bold)
         title.setFont(font)
         w = title.size().width()
         title.move(self.w // 2 - w, self.h // 20)
@@ -152,23 +152,27 @@ class GameScreen(QWidget):
         mao = len(State.jogadores[State.jogadorAtual].inventarioPecas) != 0
         tabuleiro = len(pecasTabuleiro) != 0
         onde = View.askmaocampo(self, mao=mao, tabuleiro=tabuleiro)
-        if onde == 2:
+        if onde == 2 or (not tabuleiro and onde == 1):
             return
         elif onde == 1 or (not mao and onde == 0):
-            index, peca = View.askPieceBoard(self, pecasTabuleiro)
-            if peca:
-                possibles = self.getPossibleMoviments(peca, State.tabuleiro)
-                coordenada = View.askWhereBoard(self, possibles)
-                if coordenada:
-                    self.movePieceOnBoard(peca, coordenada[0], coordenada[1])
+            data = View.askPieceBoard(self, pecasTabuleiro)
+            if not data:
+                return
+            index, peca = data
+            possibles = self.getPossibleMoviments(peca, State.tabuleiro)
+            coordenada = View.askWhereBoard(self, possibles)
+            if coordenada:
+                self.movePieceOnBoard(peca, coordenada[0], coordenada[1])
         else:
             pecas = State.jogadores[State.jogadorAtual].inventarioPecas
-            indexPieceHand, peca = View.askPieceHand(self, self, pecas)
-            if peca:
-                coordenadas = self.getFreeCoordenadas(State.tabuleiro)
-                coordenada = View.askWhere(self, coordenadas)
-                if coordenada:
-                    self.putpiece(State.jogadorAtual, indexPieceHand, coordenada[0], coordenada[1])
+            data = View.askPieceHand(self, self, pecas)
+            if not data:
+                return
+            indexPieceHand, peca = data
+            coordenadas = self.getFreeCoordenadas(State.tabuleiro)
+            coordenada = View.askWhere(self, coordenadas)
+            if coordenada:
+                self.putpiece(State.jogadorAtual, indexPieceHand, coordenada[0], coordenada[1])
 
     def movePieceOnBoard(self, piece, x, y):
         pecaTabuleiro = State.tabuleiro[x][y].peca
