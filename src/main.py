@@ -3,14 +3,14 @@ import sys
 from IPython.external.qt_for_kernel import QtGui, QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QPushButton, QMessageBox
 
 from game_state import State
 from view import View
 
 
 def main():
-    startapp(None, None)
+    startapp()
 
 
 class GameScreen(QWidget):
@@ -142,30 +142,34 @@ class GameScreen(QWidget):
         inicioBtn.show()
 
     def choosePiece(self):
-
+        atual = State.jogadores[State.jogadorAtual]
         pecasTabuleiro = []
         for i in State.tabuleiro:
             for posicao in i:
-                if posicao.peca and posicao.peca.jogador.cor == State.jogadores[State.jogadorAtual].cor:
+                if posicao.peca and posicao.peca.jogador.cor == atual.cor:
                     pecasTabuleiro.append(posicao.peca)
 
-        mao = len(State.jogadores[State.jogadorAtual].inventarioPecas) != 0
-        tabuleiro = len(pecasTabuleiro) != 0
-        onde = View.askmaocampo(self, mao=mao, tabuleiro=tabuleiro)
+        mao = len(atual.inventarioPecas) != 0
+        tabuleiro = len(pecasTabuleiro) != 0 and len(atual.inventarioPecas) <= 1
+        onde = View.askmaocampo(self, mao=mao, tabuleiro=tabuleiro, jogador = atual)
         if onde == 2 or (not tabuleiro and onde == 1):
             return
         elif onde == 1 or (not mao and onde == 0):
-            data = View.askPieceBoard(self, pecasTabuleiro)
+            data = View.askPieceBoard(self, pecasTabuleiro, jogador = atual)
             if not data:
                 return
             index, peca = data
             possibles = self.getPossibleMoviments(peca, State.tabuleiro)
-            coordenada = View.askWhereBoard(self, possibles)
-            if coordenada:
-                self.movePieceOnBoard(peca, coordenada[0], coordenada[1])
+            if len(possibles) == 0:
+                View.errormessage('Peça não tem lances possíveis')
+            else:
+                coordenada = View.askWhereBoard(self, possibles)
+                if coordenada:
+                    self.movePieceOnBoard(peca, coordenada[0], coordenada[1])
+                    self.ganhou(coordenada, State.tabuleiro, atual)
         else:
-            pecas = State.jogadores[State.jogadorAtual].inventarioPecas
-            data = View.askPieceHand(self, self, pecas)
+            pecas = atual.inventarioPecas
+            data = View.askPieceHand(self, self, pecas = pecas, jogador = atual)
             if not data:
                 return
             indexPieceHand, peca = data
@@ -173,6 +177,33 @@ class GameScreen(QWidget):
             coordenada = View.askWhere(self, coordenadas)
             if coordenada:
                 self.putpiece(State.jogadorAtual, indexPieceHand, coordenada[0], coordenada[1])
+                self.ganhou(coordenada, State.tabuleiro, atual)
+
+    def ganhou(self, coordenada, tabuleiro, atual):
+        cor = atual.cor
+
+        x = coordenada[0]
+        y = coordenada[1]
+
+        xlist = tabuleiro[x]
+        ylist = [i[y] for i in tabuleiro]
+
+        diagonal1 = []
+        diagonal2 = []
+        for i in range(4):
+            diagonal1.append(tabuleiro[i][i])
+            diagonal2.append(tabuleiro[i][3 - i])
+
+        if self.verifica(cor, xlist) or self.verifica(cor, ylist) or self.verifica(cor, diagonal1) or self.verifica(cor, diagonal2):
+            View.errormessage(f'{atual.name} ganhou!', icon= QMessageBox.Information)
+            self.close()
+            
+
+    def verifica(self, cor, lista):
+        for i in lista:
+            if not i.peca or i.peca.cor != cor:
+                return False
+        return True
 
     def movePieceOnBoard(self, piece, x, y):
         pecaTabuleiro = State.tabuleiro[x][y].peca
@@ -201,12 +232,7 @@ class GameScreen(QWidget):
             self.clear()
 
     def getPossibleMoviments(self, peca, tabuleiro):
-        # TODO
-        possibles = []
-        for i in range(4):
-            for u in range(4):
-                if not (i == peca.x and u == peca.y):
-                    possibles.append((i, u))
+        possibles = peca.movimentacao(tabuleiro)
         return possibles
 
     def clear(self):
@@ -229,8 +255,18 @@ class GameScreen(QWidget):
         return coordenadas
 
 
-def startapp(tabuleiro, jogadores):
+def startapp():
     app = QApplication(sys.argv)
+
+    name1 = View.askPlayerName(1)
+    while not name1:
+        name1 = View.askPlayerName(1)
+    name2 = View.askPlayerName(2)
+    while not name2:
+        name2 = View.askPlayerName(2)
+    State.setPlayerName(name1, 0)
+    State.setPlayerName(name2, 1)
+
     game = GameScreen()
     sys.exit(app.exec_())
 
